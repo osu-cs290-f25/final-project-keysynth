@@ -14,6 +14,7 @@ let ctx = new AudioContext();
 let filter = ctx.createBiquadFilter();
 let compressor = ctx.createDynamicsCompressor();
 filter.connect(compressor);
+filter.Q.value = -1;
 compressor.connect(ctx.destination);
 
 // Synth Settings
@@ -21,11 +22,12 @@ let volume = 0.9;
 let attack = 0;
 let release = 0.1;
 let waveform = "sine";
-let filterFrequency = 10000;
+let filterFrequency = 18000;
 volumeSlider.value = volume;
 attackSlider.value = attack;
 releaseSlider.value = release;
-filterSlider.value = filterFrequency;
+filterSlider.value = 1;
+filter.frequency.value = filterFrequency;
 waveformDropdown.value = waveform;
 
 
@@ -35,8 +37,6 @@ function playNote(frequency) {
 
     osc.type = waveform;
     osc.frequency.value = frequency;
-    filter.frequency.value = filterFrequency;
-    filter.Q.value = -1;
 
     // Connections
     gain.connect(filter);
@@ -68,8 +68,8 @@ releaseSlider.oninput = function() {
 }
 
 filterSlider.oninput = function() {
-    console.log(filterFrequency);
     filterFrequency = Math.pow(10000, filterSlider.value);
+    filter.frequency.value = filterFrequency;
 }
 
 waveformDropdown.oninput = function() {
