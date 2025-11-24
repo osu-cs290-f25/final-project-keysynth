@@ -4,6 +4,7 @@ let volumeSlider = document.getElementById("volume-slider");
 let attackSlider = document.getElementById("attack-slider");
 let releaseSlider = document.getElementById("release-slider");
 let filterSlider = document.getElementById("filter-slider");
+let detuneSlider = document.getElementById("detune-slider");
 let waveformDropdown = document.getElementById("waveform-dropdown");
 let keys = Array.from(document.getElementById("keys").children);
 
@@ -23,10 +24,12 @@ let attack = 0;
 let release = 0.1;
 let waveform = "sine";
 let filterFrequency = 18000;
+let detune = 0;
 volumeSlider.value = volume;
 attackSlider.value = attack;
 releaseSlider.value = release;
 filterSlider.value = 1;
+detuneSlider.value = detune;
 filter.frequency.value = filterFrequency;
 waveformDropdown.value = waveform;
 
@@ -51,7 +54,8 @@ function playNote(frequency) {
 
 keys.forEach(function(note, i) {
     note.addEventListener("click", function() {
-        playNote(notes[i]);
+        playNote(notes[i] + Number(detune));
+        playNote(notes[i] - Number(detune));
     })
 })
 
@@ -70,6 +74,10 @@ releaseSlider.oninput = function() {
 filterSlider.oninput = function() {
     filterFrequency = Math.pow(10000, filterSlider.value);
     filter.frequency.value = filterFrequency;
+}
+
+detuneSlider.oninput = function() {
+    detune = detuneSlider.value;
 }
 
 waveformDropdown.oninput = function() {
