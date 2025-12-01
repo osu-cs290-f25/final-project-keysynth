@@ -9,6 +9,40 @@ let waveformDropdown = document.getElementById("waveform-dropdown");
 let keys = Array.from(document.getElementById("keys").children);
 
 const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+const keyboardMap = {
+    // Low Octave
+    z: chooseNote(130.81),
+    x: chooseNote(146.83),
+    c: chooseNote(164.81),
+    v: chooseNote(174.61),
+    b: chooseNote(196),
+    n: chooseNote(220),
+    m: chooseNote(246.94),
+
+    // Mid Octave
+    a: chooseNote(261.63),
+    s: chooseNote(293.66),
+    d: chooseNote(329.63),
+    f: chooseNote(349.23),
+    g: chooseNote(392.00),
+    h: chooseNote(440.00),
+    j: chooseNote(493.88),
+    k: chooseNote(523.25),
+    l: chooseNote(587.33),
+
+    // High Octave
+    q: chooseNote(523.25),
+    w: chooseNote(587.33),
+    e: chooseNote(659.25),
+    r: chooseNote(698.46),
+    t: chooseNote(783.99),
+    y: chooseNote(880),
+    u: chooseNote(987.77),
+    i: chooseNote(1046.5),
+    o: chooseNote(1174.66),
+    p: chooseNote(1318.51)
+}
+const heldKeys = new Set();
 
 // AudioContext nodes
 let ctx = new AudioContext();
@@ -41,7 +75,6 @@ function playNote(frequency) {
     osc.type = waveform;
     osc.frequency.value = frequency;
 
-    // Connections
     gain.connect(filter);
     osc.connect(gain);
     osc.start();
@@ -52,13 +85,34 @@ function playNote(frequency) {
     gain.gain.linearRampToValueAtTime(0, ctx.currentTime + Number(attack) + Number(release));
 }
 
+function chooseNote(frequency) {
+    return function() {
+        playNote(frequency + Number(detune));
+        playNote(frequency - Number(detune));
+    }
+}
+
 keys.forEach(function(note, i) {
     note.addEventListener("click", function() {
         playNote(notes[i] + Number(detune));
         playNote(notes[i] - Number(detune));
     })
+
+    document.addEventListener("keydown", function(e) {
+        let key = e.key.toLowerCase();
+        if (heldKeys.has(key)) return;
+        heldKeys.add(key);
+
+        const action = keyboardMap[key];
+        if (action) action();
+    })
+
+    document.addEventListener("keyup", function(e) {
+        heldKeys.delete(e.key.toLowerCase());
+    })
 })
 
+// Synth Sliders
 volumeSlider.oninput = function() {
     volume = volumeSlider.value;
 }
