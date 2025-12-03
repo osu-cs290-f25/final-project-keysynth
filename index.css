@@ -15,6 +15,18 @@
     border-radius: 8px;
 }
 
+.white-key:hover {
+    cursor: pointer;
+}
+
+input[type*=range]:hover {
+    cursor: pointer;
+}
+
+#waveform-dropdown:hover {
+    cursor: pointer;
+}
+
 /*
 .black-key {
     background-color: black;
