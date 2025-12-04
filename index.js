@@ -67,7 +67,6 @@ detuneSlider.value = detune;
 filter.frequency.value = filterFrequency;
 waveformDropdown.value = waveform;
 
-
 function playNote(frequency) {
     let osc = ctx.createOscillator();
     let gain = ctx.createGain();
@@ -114,11 +113,11 @@ keys.forEach(function(note, i) {
 
 // Synth Sliders
 volumeSlider.oninput = function() {
-    volume = volumeSlider.value;
+    volume = volumeSlider.value ** 3
 }
 
 attackSlider.oninput = function() {
-    attack = attackSlider.value;
+    attack = attackSlider.value ** 1.25;
 }
 
 releaseSlider.oninput = function() {
