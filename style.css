@@ -1,0 +1,40 @@
+#keys {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 35vh;
+    border: 10px;
+}
+
+.white-key {
+    width: 70px;
+    height: 200px;
+    background-color: white;
+    border-width: 2px;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.white-key:hover {
+    cursor: pointer;
+}
+
+input[type*=range]:hover {
+    cursor: pointer;
+}
+
+#waveform-dropdown:hover {
+    cursor: pointer;
+}
+
+/*
+.black-key {
+    background-color: black;
+    color: white;
+    height: 150px;
+    width: 30px;
+    z-index: 2;
+    margin: 0 -15px;
+    border-radius: 5px;
+}
+    */
