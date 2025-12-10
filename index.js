@@ -1,5 +1,3 @@
-let startModal = document.getElementById("start-modal");
-let startButton = document.getElementById("start-button");
 let volumeSlider = document.getElementById("volume-slider");
 let attackSlider = document.getElementById("attack-slider");
 let releaseSlider = document.getElementById("release-slider");
@@ -7,6 +5,9 @@ let filterSlider = document.getElementById("filter-slider");
 let detuneSlider = document.getElementById("detune-slider");
 let waveformDropdown = document.getElementById("waveform-dropdown");
 let keys = Array.from(document.getElementById("keys").children);
+let presetList = document.getElementById("preset-list");
+let newPresetInput = document.getElementById("new-preset-input");
+let saveButton = document.getElementById("save-button");
 
 const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
 const keyboardMap = {
@@ -112,27 +113,106 @@ keys.forEach(function(note, i) {
 })
 
 // Synth Sliders
-volumeSlider.oninput = function() {
+function updateVolume() {
     volume = volumeSlider.value ** 3
 }
 
-attackSlider.oninput = function() {
+function updateAttack() {
     attack = attackSlider.value ** 1.25;
 }
 
-releaseSlider.oninput = function() {
+function updateRelease() {
     release = releaseSlider.value;
 }
 
-filterSlider.oninput = function() {
+function updateFilter() {
     filterFrequency = Math.pow(10000, filterSlider.value);
     filter.frequency.value = filterFrequency;
 }
 
-detuneSlider.oninput = function() {
+function updateDetune() {
     detune = detuneSlider.value;
 }
 
-waveformDropdown.oninput = function() {
+function updateWaveform() {
     waveform = waveformDropdown.value;
 }
+
+volumeSlider.oninput = updateVolume;
+attackSlider.oninput = updateAttack;
+releaseSlider.oninput = updateRelease;
+filterSlider.oninput = updateFilter;
+detuneSlider.oninput = updateDetune;
+waveformDropdown.oninput = updateWaveform;
+
+// Presets
+class Preset {
+    constructor(name, volume, attack, release, filterFrequency, detune, waveform) {
+        this.name = name;
+        this.volume = volume;
+        this.attack = attack;
+        this.release = release;
+        this.filterFrequency = filter;
+        this.detune = detune;
+        this.waveform = waveform;
+    }
+}
+
+let presets = [];
+
+function populatePresetList() {
+    presetList.textContent = "";
+    presets.forEach(preset => {
+        let listElement = document.createElement("li");
+        listElement.classList.add("preset-item");
+        listElement.setAttribute("data-name", preset.name);
+        listElement.setAttribute("data-volume", preset.volume);
+        listElement.setAttribute("data-attack", preset.attack);
+        listElement.setAttribute("data-release", preset.release);
+        listElement.setAttribute("data-filterFrequency", preset.filterFrequency);
+        listElement.setAttribute("data-detune", preset.detune);
+        listElement.setAttribute("data-waveform", preset.waveform);
+        listElement.textContent = preset.name;
+
+        listElement.addEventListener("click", loadPreset);
+
+        presetList.appendChild(listElement);
+    });
+    newPresetInput.value = "";
+}
+
+function savePreset() {
+    if (newPresetInput.value === "") {
+        return
+    }
+    let newPreset = new Preset(newPresetInput.value, volumeSlider.value, attackSlider.value, releaseSlider.value, filterSlider.value, detuneSlider.value, waveformDropdown.value);
+    presets.push(newPreset);    
+    populatePresetList()
+}
+
+function loadPreset(e) {
+    let element = e.currentTarget;
+    
+    volumeSlider.value = Number(element.dataset.volume);
+    attackSlider.value = Number(element.dataset.attack);
+    releaseSlider.value = Number(element.dataset.release);
+    filterSlider.value = Number(element.dataset.filterFrequency);
+    detuneSlider.value = Number(element.dataset.detune);
+    waveformDropdown.value = element.dataset.waveform;
+    updateVolume();
+    updateAttack();
+    updateRelease();
+    updateFilter();
+    updateDetune();
+    updateWaveform();
+}
+
+newPresetInput.addEventListener("keydown", function(e) {
+    if (e.key === 'Enter') {
+        savePreset();
+    }
+})
+saveButton.addEventListener("click", savePreset);
+
+
+populatePresetList();
