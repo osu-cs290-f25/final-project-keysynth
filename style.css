@@ -2,8 +2,10 @@
     display: flex;
     justify-content: center;
     position: relative;
-    top: 35vh;
+    top: 70vh;
     border: 10px;
+    left: 39%;
+    width: max-content;
 }
 
 .white-key {
@@ -16,14 +18,20 @@
 }
 
 .white-key:hover {
+    position: relative;
     cursor: pointer;
+}
+
+.white-key:active {
+    border-width: 10px;
+    border-color: gray;
 }
 
 input[type*=range]:hover {
     cursor: pointer;
 }
 
-#waveform-dropdown:hover {
+#waveform-dropdown {
     cursor: pointer;
 }
 
@@ -38,28 +46,71 @@ input[type*=range]:hover {
 
 #preset-container {
    border: 1px solid black;
-   width: 220px;
-   height: inherit;
+   width: 340px;
+   position: absolute;
+   left: 2%;
+   top: 3%;
+}
+
+#new-preset-input {
+    width: 270px;
 }
 
 ul {
-    margin: 0%  ;
+    margin: 0%;
+    padding-left: 0%;
 }
 
 li {
     padding: 3px;
-    margin: 3px;
+    margin: 3px;    
     margin-left: 0px;
-    position: relative;
-    right: 40px;
 }
 
 ul li {
     
     border-top: 1px solid black;
-    width: 215px;
+    width: 334px;
     text-align: center;
+    
 }
+
+#oscilloscope {
+    position: absolute;
+    left: 30%;
+    top:3%;
+    border-radius: 90px;
+    width: 800px;
+    height: 200px;
+    
+}   
+
+.vert-slide {
+    writing-mode: vertical-lr;
+}
+
+
+#settings { 
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    left: 29%;
+    column-gap: 50px;
+}
+
+#settings label {
+    position: relative;
+    top: 80px;
+    left: 80px;
+}
+
+#settings label.waveform {
+    position: relative;
+    top: 150px;
+    left: 120px;
+}
+
 
 /*
 .black-key {
