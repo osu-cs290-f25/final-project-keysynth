@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="synth-container">
+        <canvas id="oscilloscope"></canvas>
         <div id="settings">
             <label for="volume-slider">Volume</label>
             <input type="range" name="volume" id="volume-slider" min="0" max="0.9" value="0.9" step="0.01">
@@ -40,6 +41,7 @@
     </div>
     <div id="preset-container">
         <div id="preset-buttons-container">
+            <h2>Presets</h2>
             <input type="text" id="new-preset-input">
             <button id="save-button">Save</button>
         </div>

@@ -74,7 +74,8 @@ function playNote(frequency) {
 
     osc.type = waveform;
     osc.frequency.value = frequency;
-
+    
+    gain.connect(analyser);
     gain.connect(filter);
     osc.connect(gain);
     osc.start();
@@ -214,5 +215,46 @@ newPresetInput.addEventListener("keydown", function(e) {
 })
 saveButton.addEventListener("click", savePreset);
 
-
 populatePresetList();
+
+// Oscilliscope
+let oscilloscopeFillColor = "rgb(200, 200, 200)";
+let oscilloscopeStrokeColor = "rgb(0, 0, 0)";
+const analyser = ctx.createAnalyser();
+analyser.fftSize = 4096;
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+const canvas = document.getElementById("oscilloscope");
+const canvasCtx = canvas.getContext("2d");
+
+function draw() {
+    requestAnimationFrame(draw);
+    analyser.getByteTimeDomainData(dataArray);
+    canvasCtx.fillStyle = oscilloscopeFillColor;
+    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+    canvasCtx.lineWidth = 2;
+    canvasCtx.strokeStyle = oscilloscopeStrokeColor;
+    canvasCtx.beginPath();
+
+    const sliceWidth = (canvas.width / bufferLength);
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = (v * canvas.height) / 2;
+
+        if (i === 0) {
+            canvasCtx.moveTo(x, y);
+        } else {
+            canvasCtx.lineTo(x, y);
+        }
+        x += sliceWidth;
+    }
+
+    canvasCtx.lineTo(canvas.width, canvas.height / 2);
+    canvasCtx.stroke();
+}
+
+draw();
