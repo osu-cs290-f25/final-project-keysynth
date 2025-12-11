@@ -4,23 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+
     <title>KeySynth</title>
 </head>
 <body>
+    <div id="title">
+        <h1>WebSynthesizer - 33-6</h1>
+    </div>
     <div id="synth-container">
         <canvas id="oscilloscope"></canvas>
         <div id="settings">
             <label for="volume-slider">Volume</label>
-            <input type="range" name="volume" id="volume-slider" min="0" max="0.9" value="0.9" step="0.01">
+            <input type="range" name="volume" id="volume-slider" class="vert-slide" min="0" max="0.9" value="0.9" step="0.01">
             <label for="attack-slider">Attack</label>
-            <input type="range" name="attack" id="attack-slider" min="0" max="1" value="0" step="0.01">
+            <input type="range" name="attack" id="attack-slider" class="vert-slide" min="0" max="1" value="0" step="0.01">
             <label for="release-slider">Release</label>
-            <input type="range" name="release" id="release-slider" min="0.1" max="2" value="0.1" step="0.01">
+            <input type="range" name="release" id="release-slider" class="vert-slide" min="0.1" max="2" value="0.1" step="0.01">
             <label for="filter-slider">Filter</label>
-            <input type="range" name="filter" id="filter-slider" min="0.6" max="1" value="1" step="0.01">
+            <input type="range" name="filter" id="filter-slider" class="vert-slide" min="0.6" max="1" value="1" step="0.01">
             <label for="detune-slider">Detune</label>
-            <input type="range" name="detune" id="detune-slider" min="0" max="2" value="0" step="0.01">
-            <label for="waveform-dropdown">Waveform</label>
+            <input type="range" name="detune" id="detune-slider" class="vert-slide" min="0" max="2" value="0" step="0.01">
+            <label for="waveform-dropdown" class="waveform">Waveform</label>
             <select name="waveforms" id="waveform-dropdown">
                 <option value="sine">Sine</option>
                 <option value="triangle">Triangle</option>
@@ -36,9 +44,9 @@
             <button id="g4" class="white-key">G4</button>
             <button id="a4" class="white-key">A4</button>
             <button id="b4" class="white-key">B4</button>
-            <button id="c4" class="white-key">C5</button>
+            <button id="c5" class="white-key">C5</button>
         </div>
-    </div>
+    </div>    
     <div id="preset-container">
         <div id="preset-buttons-container">
             <h2>Presets</h2>
