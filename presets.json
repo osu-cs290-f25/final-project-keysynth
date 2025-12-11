@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Fenix",
+    "volume": "0.9",
+    "attack": "0.7",
+    "release": "1.05",
+    "filterFrequency": "0.84",
+    "detune": "0.98",
+    "waveform": "sine"
+  }
+]
